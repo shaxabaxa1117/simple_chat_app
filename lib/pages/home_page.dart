@@ -2,16 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:simple_chat_app/auth/auth_service.dart';
+import 'package:simple_chat_app/components/my_drawer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-void logOut() async{
-
-  final AuthService authService = AuthService();
-
-  authService.signOut();
-}
 
 
 
@@ -21,11 +16,11 @@ void logOut() async{
       appBar: AppBar(
        
         title: Text('Home'),
-        actions: [
-          IconButton(onPressed: logOut, icon: Icon(Icons.logout))
-        ],
         centerTitle: true,
+
+        
       ),
+      drawer: MyDrawer(),
     );
   }
 }

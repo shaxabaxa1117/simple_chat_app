@@ -1,15 +1,36 @@
 import 'package:flutter/material.dart';
 
 ThemeData lightMode = ThemeData(
+textTheme: TextTheme(
+    bodyLarge: TextStyle(
+      fontWeight: FontWeight.w700, 
+      color: Colors.grey.shade700, 
+    ),
+    bodyMedium: TextStyle(
+      fontWeight: FontWeight.w700, 
+      color: Colors.grey.shade700, 
+    ),
+    headlineLarge: TextStyle(
+      fontWeight: FontWeight.w700,
+      color: Colors.grey.shade700, 
+    ),
+    headlineMedium: TextStyle(
+      fontWeight: FontWeight.w700, 
+      color: Colors.grey.shade700,
+    ),
+
+  ),
+
+  
   colorScheme: ColorScheme.light(
-    surface: Colors.grey.shade300, 
-    primary: Colors.grey.shade500, 
+    surface: Colors.grey.shade300,
+    primary: Colors.grey.shade500,
     secondary: Colors.grey.shade200, 
-    tertiary: Colors.white, 
+    tertiary: Colors.white,
     inversePrimary: Colors.grey.shade300, 
     onPrimary: Colors.white, 
-    onSurface: Colors.grey.shade800, 
-    onBackground: Colors.grey.shade800, 
+    onSurface: Colors.grey.shade700, 
+    onBackground: Colors.grey.shade400, 
     background: Colors.white, 
   ),
   scaffoldBackgroundColor: Colors.white, 
