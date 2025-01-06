@@ -1,14 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:simple_chat_app/auth/auth_service.dart';
 import 'package:simple_chat_app/components/my_button.dart';
 import 'package:simple_chat_app/components/my_textfield.dart';
 
 class RegisterPage extends StatelessWidget {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmController = TextEditingController();
-    void Function()? onTap;
-  void register() {}
-  RegisterPage({super.key,required this.onTap});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
+  void Function()? onTap;
+
+  void register({required BuildContext context}) async {
+    final auth = AuthService();
+
+    if (_passwordController.text == _confirmController.text) {
+      try {
+        await auth.signUpWithEmailPassword(
+            _emailController.text, _passwordController.text);
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(e.toString()),
+            );
+          },
+        );
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text('Passwords don`t match'),
+          );
+        },
+      );
+    }
+  }
+
+  RegisterPage({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +91,7 @@ class RegisterPage extends StatelessWidget {
           ),
           MyButton(
             text: 'Register',
-            onTap: register,
+            onTap: () => register(context: context),
           ),
           const SizedBox(
             height: 20,

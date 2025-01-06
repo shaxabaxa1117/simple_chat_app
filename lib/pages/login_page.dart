@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:simple_chat_app/auth/auth_service.dart';
 import 'package:simple_chat_app/components/my_button.dart';
 import 'package:simple_chat_app/components/my_textfield.dart';
 
 class LoginPage extends StatelessWidget {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   void Function()? onTap;
-  void login() {}
-  LoginPage({super.key,required this.onTap});
+
+  void login({required BuildContext context}) async {
+    final AuthService auth = AuthService();
+
+    try {
+      await auth.signInWithEmailPassword(
+          _emailController.text, _passwordController.text);
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(e.toString()),
+          );
+        },
+      );
+    }
+  }
+
+  LoginPage({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +71,7 @@ class LoginPage extends StatelessWidget {
           ),
           MyButton(
             text: 'Login',
-            onTap: login,
+            onTap: () => login(context: context),
           ),
           const SizedBox(
             height: 20,
@@ -64,7 +83,7 @@ class LoginPage extends StatelessWidget {
                 'Not a member?',
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
-              SizedBox(
+             const  SizedBox(
                 width: 5,
               ),
               GestureDetector(
