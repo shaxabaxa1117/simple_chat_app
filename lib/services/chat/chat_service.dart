@@ -21,34 +21,35 @@ class ChatService {
     });
   }
 
-  Future<void> sendMessage(String receiverID, message) async {
-//! current user info
-    final String currentUserID = _auth.currentUser!.uid;
-    final String cutrrentUserEmail = _auth.currentUser!.email!;
-    final Timestamp timestamp = Timestamp.now();
- 
-//! create new message
+  Future<void> sendMessage(String receiverID, String message) async {
+  //! Current user info
+  final String currentUserID = _auth.currentUser!.uid;
+  final String currentUserEmail = _auth.currentUser!.email!;
 
-    Message newMessage = Message(
-      senderID: currentUserID,
-      senderEmail: cutrrentUserEmail,
-      receiverID: receiverID,
-      message: message,
-      timestamp: timestamp,
-    );
+  //! Create new message
+  Message newMessage = Message(
+    senderID: currentUserID,
+    senderEmail: currentUserEmail,
+    receiverID: receiverID,
+    message: message,
+    timestamp: null, // Установим значение позже
+  );
 
-    List<String> ids = [currentUserID, receiverID];
-    ids.sort();
-    String chatroomId = ids.join('_');
+  List<String> ids = [currentUserID, receiverID];
+  ids.sort();
+  String chatroomId = ids.join('_');
 
-    //! adding to database
+  //! Adding to database
+  await _firestore
+      .collection('chat_rooms')
+      .doc(chatroomId)
+      .collection('messages')
+      .add({
+    ...newMessage.toMap(),
+    'timestamp': FieldValue.serverTimestamp(), // Используем серверное время
+  });
+}
 
-    await _firestore
-        .collection('chat_rooms')
-        .doc(chatroomId)
-        .collection('messages')
-        .add(newMessage.toMap());
-  }
 
 
 
