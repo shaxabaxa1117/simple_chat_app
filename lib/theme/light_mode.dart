@@ -36,7 +36,7 @@ textTheme: TextTheme(
   scaffoldBackgroundColor: Colors.white, 
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.grey.shade500, 
-    foregroundColor: Colors.white, 
+    foregroundColor: Colors.grey.shade500,
     
   ),
 );
